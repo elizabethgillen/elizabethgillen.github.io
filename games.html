@@ -28,10 +28,12 @@
 
     <!-- Custom styles for this template -->
     <link href="css/resume.min.css" rel="stylesheet">
+    <link href="css/gamestyle.css" rel="stylesheet">
 
 </head>
 
-<body id="page-top" onload="startGame()">
+<body id="page-top" >
+<!--onload="startGame()"-->
 
 <nav class="navbar navbar-expand-lg navbar-dark bg-primary fixed-top" id="sideNav">
     <a class="navbar-brand js-scroll-trigger" href="#page-top">
@@ -81,22 +83,25 @@
         <div class="my-auto">
             <h2 class="mb-5" id="section-header">Obstacle Game</h2>
 
-
-            <script src="js/obstacle.js"></script>
+            <button type="button" onclick="startObstacle(this);unhide(this, 'obstacleControls')">Start Game</button>
 
             <br>
-            <button onmousedown="accelerate(-0.2)" onmouseup="accelerate(0.05)">ACCELERATE</button>
+            <div id="obstacleControls" class="hidden">
+                <button onmousedown="accelerate(-0.2)" onmouseup="accelerate(0.05)">ACCELERATE</button>
+                <p> Press "Accelerate" to keep the bird in the air! </p>
+            </div>
         </div>
-        Press "Accelerate" to keep the bird in the air!
     </section>
 
     <hr class="m-0">
 
     <section class="resume-section p-3 p-lg-5 d-flex flex-column" id="fish">
         <div class="my-auto">
-            <h2 class="mb-5" id="section2-header" >Fish Game</h2>
-            <script src="js/fish.js"></script>
-            <div style="text-align:center;width:480px;">
+            <h2 class="mb-5" id="section2-header">Fish Game</h2>
+
+            <button type="button" onclick="startFish(this);unhide(this, 'fishControls')">Start Game</button>
+
+            <div style="text-align:center;width:480px;" id="fishControls" class="hidden">
                 <button onmousedown="move('up')" onmouseup="clearmove()" ontouchstart="move('up')">UP</button><br><br>
                 <button onmousedown="move('left')" onmouseup="clearmove()" ontouchstart="move('left')">LEFT</button>
                 <button onmousedown="move('right')" onmouseup="clearmove()" ontouchstart="move('right')">RIGHT</button><br><br>
@@ -116,6 +121,10 @@
 
 <!-- Custom scripts for this template -->
 <script src="js/resume.min.js"></script>
+
+<!-- Game scripts -->
+<script src="js/obstacle.js"></script>
+<script src="js/fish.js"></script>
 
 </body>
 

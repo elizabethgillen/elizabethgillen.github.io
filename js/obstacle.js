@@ -2,7 +2,8 @@ var myGamePiece;
 var myObstacles = [];
 var myScore;
 
-function startGame() {
+function startObstacle(button) {
+    button.style.visibility = "hidden";
     myGamePiece = new component(30, 30, "red", 10, 120);
     myGamePiece.gravity = 0.05;
     myScore = new component("30px", "Consolas", "black", 280, 40, "text");
@@ -115,3 +116,15 @@ function everyinterval(n) {
 function accelerate(n) {
     myGamePiece.gravity = n;
 }
+
+function unhide(clickedButton, divID) {
+    var item = document.getElementById(divID);
+    if (item) {
+        if(item.className=='hidden'){
+            item.className = 'unhidden' ;
+            clickedButton.value = 'hide'
+        }else{
+            item.className = 'hidden';
+            clickedButton.value = 'unhide'
+        }
+    }}

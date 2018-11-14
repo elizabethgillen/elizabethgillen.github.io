@@ -1,32 +1,33 @@
 var fishGamePiece;
 var fishBackground;
 
-function startGame() {
-    fishGamePiece = new component(30, 30, "img/fish.png", 10, 120, "image");
-    fishBackground = new component(656, 270, "img/ocean.jpg", 0, 0, "background");
-    fishGameArea.start();
+function startFish(button) {
+    button.style.visibility = "hidden";
+    fishGamePiece = new fishComponent(30, 30, "img/fish.png", 10, 120, "image");
+    fishBackground = new fishComponent(656, 270, "img/ocean.jpg", 0, 0, "background");
+    fishGameArea.fishStart();
 }
 
 var fishGameArea = {
-    canvas : document.createElement("canvas"),
-    start : function() {
-        this.canvas.width = 480;
-        this.canvas.height = 270;
-        this.context = this.canvas.getContext("2d");
+    fishCanvas : document.createElement("canvas"),
+    fishStart : function() {
+        this.fishCanvas.width = 480;
+        this.fishCanvas.height = 270;
+        this.context = this.fishCanvas.getContext("2d");
         var i = document.getElementById("section2-header");
-        i.insertAdjacentElement("afterend", this.canvas);
+        i.insertAdjacentElement("afterend", this.fishCanvas);
         this.frameNo = 0;
-        this.interval = setInterval(updateGameArea, 20);
+        this.interval = setInterval(updateFishGameArea, 20);
     },
-    clear : function() {
-        this.context.clearRect(0, 0, this.canvas.width, this.canvas.height);
+    fishClear : function() {
+        this.context.clearRect(0, 0, this.fishCanvas.width, this.fishCanvas.height);
     },
     stop : function() {
         clearInterval(this.interval);
     }
 }
 
-function component(width, height, color, x, y, type) {
+function fishComponent(width, height, color, x, y, type) {
     this.type = type;
     if (type == "image" || type == "background") {
         this.image = new Image();
@@ -67,8 +68,8 @@ function component(width, height, color, x, y, type) {
     }
 }
 
-function updateGameArea() {
-    fishGameArea.clear();
+function updateFishGameArea() {
+    fishGameArea.fishClear();
     fishBackground.speedX = -1;
     fishBackground.newPos();
     fishBackground.update();
@@ -87,3 +88,15 @@ function clearmove() {
     fishGamePiece.speedX = 0;
     fishGamePiece.speedY = 0;
 }
+
+function unhide(clickedButton, divID) {
+    var item = document.getElementById(divID);
+    if (item) {
+        if(item.className=='hidden'){
+            item.className = 'unhidden' ;
+            clickedButton.value = 'hide'
+        }else{
+            item.className = 'hidden';
+            clickedButton.value = 'unhide'
+        }
+    }}
