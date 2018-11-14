@@ -83,12 +83,18 @@
         <div class="my-auto">
             <h2 class="mb-5" id="section-header">Obstacle Game</h2>
 
-            <button type="button" onclick="startObstacle(this);unhide(this, 'obstacleControls')">Start Game</button>
+            <div class="container" id="obstaclepic">
+                <img src="img/obstacleScreenShot.JPG" alt="Obstacle">
+                <button type="button" class="btn" onclick="startObstacle(this);unhide(this, 'obstacleControls');unhide(this, 'obstaclepic')">Start Game</button>
+            </div>
+
+
 
             <br>
             <div id="obstacleControls" class="hidden">
-                <button onmousedown="accelerate(-0.2)" onmouseup="accelerate(0.05)">ACCELERATE</button>
+                <button class="btn" onmousedown="accelerate(-0.2)" onmouseup="accelerate(0.05)">ACCELERATE</button>
                 <p> Press "Accelerate" to keep the bird in the air! </p>
+                <button type="button" class="btn" onclick="startObstacle(this)">Restart</button>
             </div>
         </div>
     </section>
@@ -99,13 +105,17 @@
         <div class="my-auto">
             <h2 class="mb-5" id="section2-header">Fish Game</h2>
 
-            <button type="button" onclick="startFish(this);unhide(this, 'fishControls')">Start Game</button>
+            <div class="container" id="fishpic">
+                <img src="img/ocean.jpg" alt="Fish">
+                <button type="button" class="btn" onclick="startFish(this);unhide(this, 'fishControls');unhide(this, 'fishpic')">Start Game</button>
+            </div>
 
             <div style="text-align:center;width:480px;" id="fishControls" class="hidden">
-                <button onmousedown="move('up')" onmouseup="clearmove()" ontouchstart="move('up')">UP</button><br><br>
-                <button onmousedown="move('left')" onmouseup="clearmove()" ontouchstart="move('left')">LEFT</button>
-                <button onmousedown="move('right')" onmouseup="clearmove()" ontouchstart="move('right')">RIGHT</button><br><br>
-                <button onmousedown="move('down')" onmouseup="clearmove()" ontouchstart="move('down')">DOWN</button>
+                <button class="btn" onmousedown="move('up')" onmouseup="clearmove()" ontouchstart="move('up')">UP</button><br><br>
+                <button class="btn" onmousedown="move('left')" onmouseup="clearmove()" ontouchstart="move('left')">LEFT</button>
+                <button class="btn" onmousedown="move('right')" onmouseup="clearmove()" ontouchstart="move('right')">RIGHT</button><br><br>
+                <button class="btn" onmousedown="move('down')" onmouseup="clearmove()" ontouchstart="move('down')">DOWN</button><br><br>
+                <button type="button" class="btn" onclick="startFish(this)">Restart</button>
             </div>
         </div>
     </section>

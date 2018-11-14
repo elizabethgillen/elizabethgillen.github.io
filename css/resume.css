@@ -87,6 +87,8 @@ p.lead {
   font-weight: 800;
   letter-spacing: 0.05rem;
   text-transform: uppercase;
+  text-align: left;
+  margin-left: 30%;
 }
 
 #sideNav .navbar-toggler:focus {
