@@ -9,6 +9,7 @@ var carObstacle6;
 var carObstacle7;
 var carObstacle8;
 var carScore;
+var goal;
 
 function startCar(button) {
     button.style.visibility = "hidden";
@@ -22,6 +23,7 @@ function startCar(button) {
     carObstacle7 = new carComponent(10, 100, "white", 300, 0);
     carObstacle8 = new carComponent(10, 100, "white", 400, 0);
     carScore = new carComponent("30px", "Consolas", "black", 280, 40, "text");
+    goal = new carComponent(10, 10, "red", 450, 200);
     carBackground = new carComponent(656, 270, "img/pl.jpg", 0, 0, "background");
     carGameArea.carStart();
 }
@@ -37,12 +39,11 @@ var carGameArea = {
         this.frameNo = 0;
         this.interval = setInterval(updateCarGameArea, 20);
         window.addEventListener('keydown', function (e) {
-            e.preventDefault();
             carGameArea.keys = (carGameArea.keys || []);
-            carGameArea.keys[e.keyCode] = (e.type == "keydown");
+            carGameArea.keys[e.keyCode] = true;
         })
         window.addEventListener('keyup', function (e) {
-            carGameArea.keys[e.keyCode] = (e.type == "keydown");
+            carGameArea.keys[e.keyCode] = false;
         })
     },
     carClear : function() {
@@ -61,21 +62,12 @@ function carComponent(width, height, color, x, y, type) {
     }
     this.width = width;
     this.height = height;
-    // this.speedX = 0;
-    // this.speedY = 0;
-    this.speed = 0;
-    this.angle = 0;
-    this.moveAngle = 0;
+    this.speedX = 0;
+    this.speedY = 0;
     this.x = x;
     this.y = y;
     this.update = function() {
         ctx = carGameArea.context;
-        ctx.save();
-        ctx.translate(this.x, this.y);
-        ctx.rotate(this.angle);
-        // ctx.fillStyle = color;
-        // ctx.fillRect(this.width / -2, this.height / -2, this.width, this.height);
-        ctx.restore();
         if (type == "image" || type == "background") {
             ctx.drawImage(this.image,
                 this.x,
@@ -93,11 +85,8 @@ function carComponent(width, height, color, x, y, type) {
         }
     }
     this.newPos = function() {
-        this.angle += this.moveAngle * Math.PI / 180;
-        this.x += this.speed * Math.sin(this.angle);
-        this.y -= this.speed * Math.cos(this.angle);
-        // this.x += this.speedX;
-        // this.y += this.speedY;
+        this.x += this.speedX;
+        this.y += this.speedY;
         if (this.type == "background") {
             if (this.x == -(this.width)) {
                 this.x = 0;
@@ -122,6 +111,24 @@ function carComponent(width, height, color, x, y, type) {
         }
         return crash;
     }
+    this.win = function(otherobj) {
+        var myleft = this.x;
+        var myright = this.x + (this.width);
+        var mytop = this.y;
+        var mybottom = this.y + (this.height);
+        var otherleft = otherobj.x;
+        var otherright = otherobj.x + (otherobj.width);
+        var othertop = otherobj.y;
+        var otherbottom = otherobj.y + (otherobj.height);
+        var win = true;
+        if ((mybottom < othertop) ||
+            (mytop > otherbottom) ||
+            (myright < otherleft) ||
+            (myleft > otherright)) {
+            win = false;
+        }
+        return win;
+    }
 }
 
 function updateCarGameArea() {
@@ -134,9 +141,21 @@ function updateCarGameArea() {
         carGamePiece.crashWith(carObstacle7)||
         carGamePiece.crashWith(carObstacle8)){
             carGameArea.stop();
-    } else {
+    }
+    else if (carGamePiece.win(goal)) {
+        carGameArea.stop();
+        alert('You win!');
+        // carScore.text = "You win!";
+    }
+    else {
         carGameArea.carClear();
         carGameArea.frameNo += 1;
+        carGamePiece.speedX = 0;
+        carGamePiece.speedY = 0;
+        if (carGameArea.keys && carGameArea.keys[65]) {carGamePiece.speedX = -1; }
+        if (carGameArea.keys && carGameArea.keys[68]) {carGamePiece.speedX = 1; }
+        if (carGameArea.keys && carGameArea.keys[87]) {carGamePiece.speedY = -1; }
+        if (carGameArea.keys && carGameArea.keys[83]) {carGamePiece.speedY = 1; }
         carBackground.newPos();
         carBackground.update();
         carGamePiece.newPos();
@@ -151,14 +170,7 @@ function updateCarGameArea() {
         carObstacle8.update();
         carScore.text="SCORE: " + carGameArea.frameNo;
         carScore.update();
-        carGamePiece.moveAngle = 0;
-        carGamePiece.speed = 0;
-        if (carGameArea.keys && carGameArea.keys[37]) {carGamePiece.moveAngle = -1; }
-        if (carGameArea.keys && carGameArea.keys[39]) {carGamePiece.moveAngle = 1; }
-        if (carGameArea.keys && carGameArea.keys[38]) {carGamePiece.speed= 1; }
-        if (carGameArea.keys && carGameArea.keys[40]) {carGamePiece.speed= -1; }
-        carGamePiece.newPos();
-        carGamePiece.update();
+        goal.update();
     }
 }
 
