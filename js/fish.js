@@ -2,7 +2,7 @@ var fishGamePiece;
 var fishBackground;
 
 function startFish(button) {
-    button.style.visibility = "hidden";
+    // button.style.visibility = "hidden";
     fishGamePiece = new fishComponent(30, 30, "img/fish.png", 10, 120, "image");
     fishBackground = new fishComponent(656, 270, "img/ocean.jpg", 0, 0, "background");
     fishGameArea.fishStart();
@@ -89,7 +89,7 @@ function clearmove() {
     fishGamePiece.speedY = 0;
 }
 
-function unhide(clickedButton, divID) {
+function fishunhide(clickedButton, divID) {
     var item = document.getElementById(divID);
     if (item) {
         if(item.className=='hidden'){

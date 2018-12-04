@@ -8,11 +8,13 @@ var carObstacle5;
 var carObstacle6;
 var carObstacle7;
 var carObstacle8;
-var carScore;
 var goal;
+var rand;
+var alertCount;
 
 function startCar(button) {
-    button.style.visibility = "hidden";
+    // button.style.visibility = "hidden";
+    alertCount = 0;
     carGamePiece = new carComponent(80, 40, "img/car.jpg", 10, 120, "image");
     carObstacle1 = new carComponent(10, 100, "white", 100, 170);
     carObstacle2 = new carComponent(10, 100, "white", 200, 170);
@@ -22,8 +24,23 @@ function startCar(button) {
     carObstacle6 = new carComponent(10, 100, "white", 200, 0);
     carObstacle7 = new carComponent(10, 100, "white", 300, 0);
     carObstacle8 = new carComponent(10, 100, "white", 400, 0);
-    carScore = new carComponent("30px", "Consolas", "black", 280, 40, "text");
-    goal = new carComponent(10, 10, "red", 450, 200);
+    rand = Math.floor(Math.random() * Math.floor(8));
+    if (rand == 0)
+        goal = new carComponent(10, 10, "red", 150, 250);
+    else if (rand == 1)
+        goal = new carComponent(10, 10, "red", 250, 250);
+    else if (rand == 2)
+        goal = new carComponent(10, 10, "red", 350, 250);
+    else if (rand == 3)
+        goal = new carComponent(10, 10, "red", 450, 250);
+    else if (rand == 4)
+        goal = new carComponent(10, 10, "red", 150, 10);
+    else if (rand == 5)
+        goal = new carComponent(10, 10, "red", 250, 10);
+    else if (rand == 6)
+        goal = new carComponent(10, 10, "red", 350, 10);
+    else if (rand == 7)
+        goal = new carComponent(10, 10, "red", 450, 10);
     carBackground = new carComponent(656, 270, "img/pl.jpg", 0, 0, "background");
     carGameArea.carStart();
 }
@@ -38,6 +55,7 @@ var carGameArea = {
         i.insertAdjacentElement("afterend", this.carCanvas);
         this.frameNo = 0;
         this.interval = setInterval(updateCarGameArea, 20);
+        carGameArea.keys = [];
         window.addEventListener('keydown', function (e) {
             carGameArea.keys = (carGameArea.keys || []);
             carGameArea.keys[e.keyCode] = true;
@@ -74,11 +92,6 @@ function carComponent(width, height, color, x, y, type) {
                 this.y,
                 this.width, this.height);
         }
-        else if(this.type == "text") {
-            ctx.font = this.width + " " + this.height;
-            ctx.fillStyle = color;
-            ctx.fillText(this.text, this.x, this.y);
-        }
         else {
             ctx.fillStyle = color;
             ctx.fillRect(this.x, this.y, this.width, this.height);
@@ -94,37 +107,37 @@ function carComponent(width, height, color, x, y, type) {
         }
     }
     this.crashWith = function(otherobj) {
-        var myleft = this.x;
-        var myright = this.x + (this.width);
-        var mytop = this.y;
-        var mybottom = this.y + (this.height);
+        var carleft = this.x;
+        var carright = this.x + (this.width);
+        var cartop = this.y;
+        var carbottom = this.y + (this.height);
         var otherleft = otherobj.x;
         var otherright = otherobj.x + (otherobj.width);
         var othertop = otherobj.y;
         var otherbottom = otherobj.y + (otherobj.height);
         var crash = true;
-        if ((mybottom < othertop) ||
-            (mytop > otherbottom) ||
-            (myright < otherleft) ||
-            (myleft > otherright)) {
+        if ((carbottom < othertop) ||
+            (cartop > otherbottom) ||
+            (carright < otherleft) ||
+            (carleft > otherright)) {
             crash = false;
         }
         return crash;
     }
     this.win = function(otherobj) {
-        var myleft = this.x;
-        var myright = this.x + (this.width);
-        var mytop = this.y;
-        var mybottom = this.y + (this.height);
+        var carleft = this.x;
+        var carright = this.x + (this.width);
+        var cartop = this.y;
+        var carbottom = this.y + (this.height);
         var otherleft = otherobj.x;
         var otherright = otherobj.x + (otherobj.width);
         var othertop = otherobj.y;
         var otherbottom = otherobj.y + (otherobj.height);
         var win = true;
-        if ((mybottom < othertop) ||
-            (mytop > otherbottom) ||
-            (myright < otherleft) ||
-            (myleft > otherright)) {
+        if ((carbottom < othertop) ||
+            (cartop > otherbottom) ||
+            (carright < otherleft) ||
+            (carleft > otherright)) {
             win = false;
         }
         return win;
@@ -141,11 +154,17 @@ function updateCarGameArea() {
         carGamePiece.crashWith(carObstacle7)||
         carGamePiece.crashWith(carObstacle8)){
             carGameArea.stop();
+            if(alertCount < 1) {
+                alert('You lose!');
+                alertCount++;
+            }
     }
     else if (carGamePiece.win(goal)) {
+        if(alertCount < 1) {
+            alert('You win!');
+            alertCount++;
+        }
         carGameArea.stop();
-        alert('You win!');
-        // carScore.text = "You win!";
     }
     else {
         carGameArea.carClear();
@@ -156,7 +175,6 @@ function updateCarGameArea() {
         if (carGameArea.keys && carGameArea.keys[68]) {carGamePiece.speedX = 1; }
         if (carGameArea.keys && carGameArea.keys[87]) {carGamePiece.speedY = -1; }
         if (carGameArea.keys && carGameArea.keys[83]) {carGamePiece.speedY = 1; }
-        carBackground.newPos();
         carBackground.update();
         carGamePiece.newPos();
         carGamePiece.update();
@@ -168,8 +186,6 @@ function updateCarGameArea() {
         carObstacle6.update();
         carObstacle7.update();
         carObstacle8.update();
-        carScore.text="SCORE: " + carGameArea.frameNo;
-        carScore.update();
         goal.update();
     }
 }
@@ -186,7 +202,7 @@ function clearmove() {
     carGamePiece.speedY = 0;
 }
 
-function unhide(clickedButton, divID) {
+function carunhide(clickedButton, divID) {
     var item = document.getElementById(divID);
     if (item) {
         if(item.className=='hidden'){

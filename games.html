@@ -56,6 +56,7 @@
                 <ul class="dropdown-menu">
                     <li class="nav-item"><a class="js-scroll-trigger" href="#obstacle">Obstacle Game</a></li>
                     <li class="nav-item"><a class="js-scroll-trigger" href="#fish">Fish Game</a></li>
+                    <li class="nav-item"><a class="js-scroll-trigger" href="#car">Parking Game</a></li>
                 </ul>
             </li>
             <li class="nav-item">
@@ -90,13 +91,10 @@
                 <img src="img/obstacleScreenShot.JPG" alt="Obstacle">
                 <button type="button" class="btn" onclick="startObstacle(this);unhide(this, 'obstacleControls');unhide(this, 'obstaclepic')">Start Game</button>
             </div>
-
-
-
             <br>
             <div id="obstacleControls" class="hidden">
                 <button class="btn" onmousedown="accelerate(-0.2)" onmouseup="accelerate(0.05)">ACCELERATE</button>
-                <p> Press "Accelerate" to keep the bird in the air! </p>
+                <p> Press "Accelerate" to keep the box in the air! </p>
                 <button type="button" class="btn" onclick="startObstacle(this)">Restart</button>
             </div>
         </div>
@@ -110,7 +108,7 @@
 
         <div class="container" id="fishpic">
             <img src="img/ocean.jpg" alt="Fish">
-            <button type="button" class="btn" onclick="startFish(this);unhide(this, 'fishControls');unhide(this, 'fishpic')">Start Game</button>
+            <button type="button" class="btn" onclick="startFish(this);fishunhide(this, 'fishControls');fishunhide(this, 'fishpic')">Start Game</button>
         </div>
 
         <div style="text-align:center;width:480px;" id="fishControls" class="hidden">
@@ -126,15 +124,14 @@
 <section class="resume-section p-3 p-lg-5 d-flex flex-column" id="car">
     <div class="my-auto">
         <h2 class="mb-5" id="section3-header">Parking Game</h2>
-
         <div class="container" id="parkinglotpic">
-            <img src="img/plshot.PNG" alt="Parking Lot">
-            <button type="button" class="btn" onclick="startCar(this);unhide(this, 'carControls');unhide(this, 'parkinglotpic')">Start Game</button>
+            <img src="img/newpl.PNG" alt="Parking Lot">
+            <button type="button" class="btn" id="start" onclick="startCar(this);carunhide(this, 'carControls');carunhide(this, 'parkinglotpic')">Start Game</button>
         </div>
-
         <div style="text-align:center;width:480px;" id="carControls" class="hidden">
-            <p> Use the ASWD keys to control the car! </p>
-            <button type="button" class="btn" onclick="startCar(this)">Restart</button>
+            <p> Park the car in the space where the red box is! </p>
+            <p> Use the ASWD keys to control the car. </p>
+            <button type="button" class="btn" id = "restart" onclick="startCar(this)">Restart</button>
         </div>
     </div>
 </section>
@@ -152,10 +149,9 @@
 <script src="js/resume.min.js"></script>
 
 <!-- Game scripts -->
-<!--<script src="js/obstacle.js"></script>-->
-<!--<script src="js/fish.js"></script>-->
+<script src="js/obstacle.js"></script>
 <script src="js/car.js"></script>
-
+<script src="js/fish.js"></script>
 
 </body>
 
