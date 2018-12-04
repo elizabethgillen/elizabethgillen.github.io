@@ -1,9 +1,11 @@
 var myGamePiece;
 var myObstacles = [];
 var myScore;
+var obstacleAlerts;
 
 function startObstacle(button) {
     // button.style.visibility = "hidden";
+    obstacleAlerts = 0;
     myGamePiece = new component(30, 30, "red", 10, 120);
     myGamePiece.gravity = 0.05;
     myScore = new component("30px", "Consolas", "black", 280, 40, "text");
@@ -83,6 +85,10 @@ function updateGameArea() {
     var x, height, gap, minHeight, maxHeight, minGap, maxGap;
     for (i = 0; i < myObstacles.length; i += 1) {
         if (myGamePiece.crashWith(myObstacles[i])) {
+            if(obstacleAlerts < 1) {
+                alert('You lose!');
+                obstacleAlerts++;
+            }
             return;
         }
     }

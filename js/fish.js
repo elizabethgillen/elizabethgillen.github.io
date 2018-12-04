@@ -1,10 +1,40 @@
 var fishGamePiece;
 var fishBackground;
+var kelp1;
+var kelp2;
+var shark;
+var worm;
+var fishAlerts;
+var randObstacles;
 
 function startFish(button) {
     // button.style.visibility = "hidden";
-    fishGamePiece = new fishComponent(30, 30, "img/fish.png", 10, 120, "image");
+    fishAlerts = 0;
+    fishGamePiece = new fishComponent(50, 50, "img/betterfish.png", 10, 120, "image");
     fishBackground = new fishComponent(656, 270, "img/ocean.jpg", 0, 0, "background");
+    kelp1 = new fishComponent(60, 60, "img/newkelp.png", 150, 200, "image");
+    kelp2 = new fishComponent(60, 60, "img/newkelp.png", 300, 200, "image");
+    randObstacles = Math.floor(Math.random() * Math.floor(5));
+    if (randObstacles == 0) {
+        shark = new fishComponent(150, 100, "img/shark.jpg", 80, 50, "image");
+        worm = new fishComponent(40, 30, "img/worm.png", 300, 100, "image");
+    }
+    else if (randObstacles == 1){
+        shark = new fishComponent(150, 100, "img/shark.jpg", 275, 30, "image");
+        worm = new fishComponent(40, 30, "img/worm.png", 100, 80, "image");
+    }
+    else if (randObstacles == 2){
+        shark = new fishComponent(150, 100, "img/shark.jpg", 70, 80, "image");
+        worm = new fishComponent(40, 30, "img/worm.png", 200, 50, "image");
+    }
+    else if (randObstacles == 3){
+        shark = new fishComponent(150, 100, "img/shark.jpg", 80, 30, "image");
+        worm = new fishComponent(40, 30, "img/worm.png", 400, 150, "image");
+    }
+    else if (randObstacles == 4){
+        shark = new fishComponent(150, 100, "img/shark.jpg", 90, 30, "image");
+        worm = new fishComponent(40, 30, "img/worm.png", 250, 200, "image");
+    }
     fishGameArea.fishStart();
 }
 
@@ -66,15 +96,55 @@ function fishComponent(width, height, color, x, y, type) {
             }
         }
     }
+    this.crashWith = function(otherobj) {
+        var myleft = this.x;
+        var myright = this.x + (this.width);
+        var mytop = this.y;
+        var mybottom = this.y + (this.height);
+        var otherleft = otherobj.x;
+        var otherright = otherobj.x + (otherobj.width);
+        var othertop = otherobj.y;
+        var otherbottom = otherobj.y + (otherobj.height);
+        var crash = true;
+        if ((mybottom < othertop) ||
+            (mytop > otherbottom) ||
+            (myright < otherleft) ||
+            (myleft > otherright)) {
+            crash = false;
+        }
+        return crash;
+    }
 }
 
 function updateFishGameArea() {
-    fishGameArea.fishClear();
-    fishBackground.speedX = -1;
-    fishBackground.newPos();
-    fishBackground.update();
-    fishGamePiece.newPos();
-    fishGamePiece.update();
+    if (fishGamePiece.crashWith(kelp1)||
+        fishGamePiece.crashWith(kelp2)||
+        fishGamePiece.crashWith(shark)) {
+        fishGameArea.stop();
+        if(fishAlerts < 1) {
+            alert('You lose!');
+            fishAlerts++;
+        }
+    }
+    else if(fishGamePiece.crashWith(worm)){
+        if(fishAlerts < 1) {
+            alert('You win!');
+            fishAlerts++;
+        }
+        carGameArea.stop();
+    }
+    else {
+        fishGameArea.fishClear();
+        fishBackground.speedX = -1;
+        fishBackground.newPos();
+        fishBackground.update();
+        fishGamePiece.newPos();
+        fishGamePiece.update();
+        kelp1.update();
+        kelp2.update();
+        shark.update();
+        worm.update();
+    }
 }
 
 function move(dir) {

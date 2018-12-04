@@ -10,11 +10,11 @@ var carObstacle7;
 var carObstacle8;
 var goal;
 var rand;
-var alertCount;
+var carAlerts;
 
 function startCar(button) {
     // button.style.visibility = "hidden";
-    alertCount = 0;
+    carAlerts = 0;
     carGamePiece = new carComponent(80, 40, "img/car.jpg", 10, 120, "image");
     carObstacle1 = new carComponent(10, 100, "white", 100, 170);
     carObstacle2 = new carComponent(10, 100, "white", 200, 170);
@@ -124,24 +124,6 @@ function carComponent(width, height, color, x, y, type) {
         }
         return crash;
     }
-    this.win = function(otherobj) {
-        var carleft = this.x;
-        var carright = this.x + (this.width);
-        var cartop = this.y;
-        var carbottom = this.y + (this.height);
-        var otherleft = otherobj.x;
-        var otherright = otherobj.x + (otherobj.width);
-        var othertop = otherobj.y;
-        var otherbottom = otherobj.y + (otherobj.height);
-        var win = true;
-        if ((carbottom < othertop) ||
-            (cartop > otherbottom) ||
-            (carright < otherleft) ||
-            (carleft > otherright)) {
-            win = false;
-        }
-        return win;
-    }
 }
 
 function updateCarGameArea() {
@@ -154,15 +136,15 @@ function updateCarGameArea() {
         carGamePiece.crashWith(carObstacle7)||
         carGamePiece.crashWith(carObstacle8)){
             carGameArea.stop();
-            if(alertCount < 1) {
+            if(carAlerts < 1) {
                 alert('You lose!');
-                alertCount++;
+                carAlerts++;
             }
     }
-    else if (carGamePiece.win(goal)) {
-        if(alertCount < 1) {
+    else if (carGamePiece.crashWith(goal)) {
+        if(carAlerts < 1) {
             alert('You win!');
-            alertCount++;
+            carAlerts++;
         }
         carGameArea.stop();
     }

@@ -107,11 +107,12 @@
         <h2 class="mb-5" id="section2-header">Fish Game</h2>
 
         <div class="container" id="fishpic">
-            <img src="img/ocean.jpg" alt="Fish">
+            <img src="img/newfishshot.PNG" alt="Fish">
             <button type="button" class="btn" onclick="startFish(this);fishunhide(this, 'fishControls');fishunhide(this, 'fishpic')">Start Game</button>
         </div>
 
         <div style="text-align:center;width:480px;" id="fishControls" class="hidden">
+            <p> Use the keys to move the fish toward the worm! Be careful of other dangers! </p>
             <button class="btn" onmousedown="move('up')" onmouseup="clearmove()" ontouchstart="move('up')">UP</button><br><br>
             <button class="btn" onmousedown="move('left')" onmouseup="clearmove()" ontouchstart="move('left')">LEFT</button>
             <button class="btn" onmousedown="move('right')" onmouseup="clearmove()" ontouchstart="move('right')">RIGHT</button><br><br>
@@ -130,7 +131,7 @@
         </div>
         <div style="text-align:center;width:480px;" id="carControls" class="hidden">
             <p> Park the car in the space where the red box is! </p>
-            <p> Use the ASWD keys to control the car. </p>
+            <p> Use the WASD keys to control the car. </p>
             <button type="button" class="btn" id = "restart" onclick="startCar(this)">Restart</button>
         </div>
     </div>

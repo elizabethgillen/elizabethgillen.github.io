@@ -28,13 +28,13 @@
 
 /* Fake image */
 .fakeimg {
-    background-color: #aaa;
+    background-color: #7dbae8;
     width: 100%;
     padding: 20px;
 }
 
 .images{
-    background-color: #aaa;
+    background-color: #7dbae8;
     width: 100%;
     padding: 20px;
 }
@@ -57,7 +57,7 @@
 .footer {
     padding: 20px;
     text-align: center;
-    background: #ddd;
+    background: #7dbae8;
     margin-top: 20px;
 }
 
