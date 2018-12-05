@@ -12,6 +12,7 @@ function startObstacle(button) {
     myObstacles = [];
     myBackground = new component(656, 270, "img/field.jpg", 0, 0, "image");
     myScore = new component("30px", "Consolas", "white", 280, 40, "text");
+    myGameArea.stop();
     myGameArea.start();
 }
 
@@ -28,6 +29,9 @@ var myGameArea = {
     },
     clear : function() {
         this.context.clearRect(0, 0, this.canvas.width, this.canvas.height);
+    },
+    stop : function() {
+        clearInterval(this.interval);
     }
 }
 

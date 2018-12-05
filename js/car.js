@@ -42,6 +42,7 @@ function startCar(button) {
     else if (rand == 7)
         goal = new carComponent(10, 10, "red", 450, 10);
     carBackground = new carComponent(656, 270, "img/pl.jpg", 0, 0, "background");
+    carGameArea.stop();
     carGameArea.carStart();
 }
 

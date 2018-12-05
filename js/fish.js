@@ -35,6 +35,7 @@ function startFish(button) {
         shark = new fishComponent(150, 100, "img/shark.jpg", 90, 30, "image");
         worm = new fishComponent(40, 30, "img/worm.png", 250, 200, "image");
     }
+    fishGameArea.stop();
     fishGameArea.fishStart();
 }
 
@@ -48,6 +49,14 @@ var fishGameArea = {
         i.insertAdjacentElement("afterend", this.fishCanvas);
         this.frameNo = 0;
         this.interval = setInterval(updateFishGameArea, 20);
+        fishGameArea.keys = [];
+        window.addEventListener('keydown', function (e) {
+            fishGameArea.keys = (fishGameArea.keys || []);
+            fishGameArea.keys[e.keyCode] = true;
+        })
+        window.addEventListener('keyup', function (e) {
+            fishGameArea.keys[e.keyCode] = false;
+        })
     },
     fishClear : function() {
         this.context.clearRect(0, 0, this.fishCanvas.width, this.fishCanvas.height);
@@ -131,10 +140,16 @@ function updateFishGameArea() {
             alert('You win!');
             fishAlerts++;
         }
-        carGameArea.stop();
+        fishGameArea.stop();
     }
     else {
         fishGameArea.fishClear();
+        fishGamePiece.speedX = 0;
+        fishGamePiece.speedY = 0;
+        if (fishGameArea.keys && fishGameArea.keys[65]) {fishGamePiece.speedX = -1; }
+        if (fishGameArea.keys && fishGameArea.keys[68]) {fishGamePiece.speedX = 1; }
+        if (fishGameArea.keys && fishGameArea.keys[87]) {fishGamePiece.speedY = -1; }
+        if (fishGameArea.keys && fishGameArea.keys[83]) {fishGamePiece.speedY = 1; }
         fishBackground.speedX = -1;
         fishBackground.newPos();
         fishBackground.update();
@@ -147,12 +162,12 @@ function updateFishGameArea() {
     }
 }
 
-function move(dir) {
-    if (dir == "up") {fishGamePiece.speedY = -1; }
-    if (dir == "down") {fishGamePiece.speedY = 1; }
-    if (dir == "left") {fishGamePiece.speedX = -1; }
-    if (dir == "right") {fishGamePiece.speedX = 1; }
-}
+// function move(dir) {
+//     if (dir == "up") {fishGamePiece.speedY = -1; }
+//     if (dir == "down") {fishGamePiece.speedY = 1; }
+//     if (dir == "left") {fishGamePiece.speedX = -1; }
+//     if (dir == "right") {fishGamePiece.speedX = 1; }
+// }
 
 function clearmove() {
     fishGamePiece.speedX = 0;
