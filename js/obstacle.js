@@ -2,14 +2,16 @@ var myGamePiece;
 var myObstacles = [];
 var myScore;
 var obstacleAlerts;
+var myBackground;
 
 function startObstacle(button) {
     // button.style.visibility = "hidden";
     obstacleAlerts = 0;
-    myGamePiece = new component(30, 30, "red", 10, 120);
+    myGamePiece = new component(30, 30, "img/bee.png", 10, 120, "image");
     myGamePiece.gravity = 0.05;
-    myScore = new component("30px", "Consolas", "black", 280, 40, "text");
     myObstacles = [];
+    myBackground = new component(656, 270, "img/field.jpg", 0, 0, "image");
+    myScore = new component("30px", "Consolas", "white", 280, 40, "text");
     myGameArea.start();
 }
 
@@ -31,6 +33,10 @@ var myGameArea = {
 
 function component(width, height, color, x, y, type) {
     this.type = type;
+    if (type == "image") {
+        this.image = new Image();
+        this.image.src = color;
+    }
     this.score = 0;
     this.width = width;
     this.height = height;
@@ -46,7 +52,14 @@ function component(width, height, color, x, y, type) {
             ctx.font = this.width + " " + this.height;
             ctx.fillStyle = color;
             ctx.fillText(this.text, this.x, this.y);
-        } else {
+        }
+        else if (type == "image") {
+            ctx.drawImage(this.image,
+                this.x,
+                this.y,
+                this.width, this.height);
+        }
+        else {
             ctx.fillStyle = color;
             ctx.fillRect(this.x, this.y, this.width, this.height);
         }
@@ -93,6 +106,8 @@ function updateGameArea() {
         }
     }
     myGameArea.clear();
+    myBackground.newPos();
+    myBackground.update();
     myGameArea.frameNo += 1;
     if (myGameArea.frameNo == 1 || everyinterval(150)) {
         x = myGameArea.canvas.width;
@@ -102,8 +117,8 @@ function updateGameArea() {
         minGap = 50;
         maxGap = 200;
         gap = Math.floor(Math.random()*(maxGap-minGap+1)+minGap);
-        myObstacles.push(new component(10, height, "green", x, 0));
-        myObstacles.push(new component(10, x - height - gap, "green", x, height + gap));
+        myObstacles.push(new component(10, height, "black", x, 0));
+        myObstacles.push(new component(10, x - height - gap, "black", x, height + gap));
     }
     for (i = 0; i < myObstacles.length; i += 1) {
         myObstacles[i].x += -1;
