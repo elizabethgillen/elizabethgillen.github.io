@@ -146,10 +146,10 @@ function updateFishGameArea() {
         fishGameArea.fishClear();
         fishGamePiece.speedX = 0;
         fishGamePiece.speedY = 0;
-        if (fishGameArea.keys && fishGameArea.keys[65]) {fishGamePiece.speedX = -1; }
-        if (fishGameArea.keys && fishGameArea.keys[68]) {fishGamePiece.speedX = 1; }
-        if (fishGameArea.keys && fishGameArea.keys[87]) {fishGamePiece.speedY = -1; }
-        if (fishGameArea.keys && fishGameArea.keys[83]) {fishGamePiece.speedY = 1; }
+        if (fishGameArea.keys && fishGameArea.keys[65]) {fishGamePiece.speedX = -5; }
+        if (fishGameArea.keys && fishGameArea.keys[68]) {fishGamePiece.speedX = 5; }
+        if (fishGameArea.keys && fishGameArea.keys[87]) {fishGamePiece.speedY = -5; }
+        if (fishGameArea.keys && fishGameArea.keys[83]) {fishGamePiece.speedY = 5; }
         fishBackground.speedX = -1;
         fishBackground.newPos();
         fishBackground.update();

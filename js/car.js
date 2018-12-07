@@ -154,10 +154,10 @@ function updateCarGameArea() {
         carGameArea.frameNo += 1;
         carGamePiece.speedX = 0;
         carGamePiece.speedY = 0;
-        if (carGameArea.keys && carGameArea.keys[65]) {carGamePiece.speedX = -1; }
-        if (carGameArea.keys && carGameArea.keys[68]) {carGamePiece.speedX = 1; }
-        if (carGameArea.keys && carGameArea.keys[87]) {carGamePiece.speedY = -1; }
-        if (carGameArea.keys && carGameArea.keys[83]) {carGamePiece.speedY = 1; }
+        if (carGameArea.keys && carGameArea.keys[65]) {carGamePiece.speedX = -5; }
+        if (carGameArea.keys && carGameArea.keys[68]) {carGamePiece.speedX = 5; }
+        if (carGameArea.keys && carGameArea.keys[87]) {carGamePiece.speedY = -5; }
+        if (carGameArea.keys && carGameArea.keys[83]) {carGamePiece.speedY = 5; }
         carBackground.update();
         carGamePiece.newPos();
         carGamePiece.update();
@@ -174,10 +174,10 @@ function updateCarGameArea() {
 }
 
 function move(dir) {
-    if (dir == "up") {carGamePiece.speedY = -1; }
-    if (dir == "down") {carGamePiece.speedY = 1; }
-    if (dir == "left") {carGamePiece.speedX = -1; }
-    if (dir == "right") {carGamePiece.speedX = 1; }
+    if (dir == "up") {carGamePiece.speedY = -5; }
+    if (dir == "down") {carGamePiece.speedY = 5; }
+    if (dir == "left") {carGamePiece.speedX = -5; }
+    if (dir == "right") {carGamePiece.speedX = 5; }
 }
 
 function clearmove() {
